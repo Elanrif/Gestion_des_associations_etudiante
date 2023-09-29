@@ -1,0 +1,61 @@
+1. Lorsque on recupère un Props ou UserContext. dans le return il faut toujours checker 
+sinon dans le DOM il essayera d'afficher le props. alors qu'il n'est pas encore envoyé.
+
+    a. car les composant qui se trouve sur une <Route>..</Route> vont essayer de tous s'afficher dans INDEX.HTML
+    
+
+....return (
+    <>
+    { props.name && (....)}
+    </>
+)
+
+ou 
+
+....return (
+    <>
+    { props.name ? (....) : (....Acune  information.....)}
+    </>
+)
+
+2. Lorsque on laisse useState(null) , on aura des problèmes car dans le DOM on essayera d'afficher ses valeurs 
+alors qu'il sont null. mieux vaut  spécifier les attributs ({ name : ,,....})
+
+3. dans les cas de axios.get mieux vaut initialiser useState a tableau vide ([]) si on compte recupérer une liste.
+sinon on aura une erreur qui dira .map n'est pas une fonction.
+
+4. Quand on a du tableau vide exp : (Response) initialisé sur Spring boot. on verifie par response.length > 0 et non response ?
+//ChatGPT3
+4.La différence entre comment.responses et comment?.responses réside dans la manière dont elles traitent les cas où comment pourrait être nul ou non défini (null ou undefined).
+
+comment.responses :
+
+1.Si comment est nul (null ou undefined), cette expression déclenchera une erreur de type "TypeError: Cannot read property 'responses' of null" (en JavaScript) ou une erreur similaire en fonction du langage.
+
+Cela signifie que vous devez vous assurer que comment n'est pas nul avant d'essayer d'accéder à sa propriété responses.
+
+comment?.responses :
+
+L'opérateur de navigation optionnel (?.) est une fonctionnalité introduite dans ECMAScript 2020 (ES11) pour gérer les cas où l'objet peut être nul ou non défini.
+
+2.Si comment est nul (null ou undefined), alors comment?.responses renverra undefined au lieu de déclencher une erreur. Cela évite le plantage de l'application.
+
+Si comment est défini, alors comment?.responses fonctionnera normalement et renverra la valeur de responses associée à comment.
+
+En résumé, comment?.responses est une manière sécurisée d'accéder à la propriété responses d'un objet comment qui pourrait être nul. Cela permet d'éviter les erreurs dues à un accès à une propriété sur un objet nul ou non défini.
+
+
+7. USER LOGIN , REGISTER 
+
+ a. on utilise le State pour sotcker un User ( si ces données seront dynamic donc utililisé le state ou context)
+ b. SessionStorage , pour des données temporaires comme le JWT (TOKEN)
+
+8. SI dans le PARENT d'un composant on a vérifier la valeur qu'on va envoyer au Props.d'un composant enfant.
+pas la peine dans ce composant enfant verifier. 
+je repete si dans composant parent. tu verifie avant d'afficher le composant enfant 
+exp : 
+
+{ user && <User userInfo ={user}} . donc dans User pas la peine de vérifier
+
+9. Donc parfois avant de passer un props a un composant il faut s'assurer avant de passer, comme ça on a pas a verifier dans le composant qui recoit le state
+sinon si on passe directement on doit vérifier dans le return du composant qui reçoit le state.

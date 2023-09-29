@@ -1,0 +1,38 @@
+
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "status": "Président"
+  },
+  {
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "status": "Secrétaire"
+  },
+  {
+    "firstName": "Bob",
+    "lastName": "Smith",
+    "status": "Trésorier"
+  },
+  {
+    "firstName": "Alice",
+    "lastName": "Johnson",
+    "status": "Membre"
+  },
+  {
+    "firstName": "James",
+    "lastName": "Brown",
+    "status": "Membre"
+  },
+  {
+    "firstName": "Eva",
+    "lastName": "Green",
+    "status": "Membre"
+  },
+  {
+    "firstName": "Michael",
+    "lastName": "Clark",
+    "status": "Membre"
+  }
+]

@@ -1,0 +1,277 @@
+http://localhost:8080/userInfo/saveAll
+
+const userInfos =
+ [
+    {
+        "firstName": "Jean",
+        "lastName": "Dupont",
+        "password": "password123",
+        "email": "jean.dupont@example.fr",
+        "apogee": "123456789",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Marie",
+        "lastName": "Lefevre",
+        "password": "qwerty123",
+        "email": "marie.lefevre@example.fr",
+        "apogee": "987654321",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Paul",
+        "lastName": "Smith",
+        "password": "passpass",
+        "email": "paul.smith@example.com",
+        "apogee": "A1234567",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Sophie",
+        "lastName": "Jones",
+        "password": "secretword",
+        "email": "sophie.jones@example.com",
+        "apogee": "B7654321",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Luc",
+        "lastName": "Martin",
+        "password": "mysecretpass",
+        "email": "luc.martin@example.fr",
+        "apogee": "456123789",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Emily",
+        "lastName": "Johnson",
+        "password": "secure123",
+        "email": "emily.johnson@example.com",
+        "apogee": "C9876543",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Pierre",
+        "lastName": "Dubois",
+        "password": "password789",
+        "email": "pierre.dubois@example.fr",
+        "apogee": "987123456",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Olivia",
+        "lastName": "Brown",
+        "password": "mypassword",
+        "email": "olivia.brown@example.com",
+        "apogee": "D5432167",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Antoine",
+        "lastName": "Thomas",
+        "password": "123456",
+        "email": "antoine.thomas@example.fr",
+        "apogee": "876543219",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Emma",
+        "lastName": "Williams",
+        "password": "hello123",
+        "email": "emma.williams@example.com",
+        "apogee": "E2345678",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Nicolas",
+        "lastName": "Lefevre",
+        "password": "abcde",
+        "email": "nicolas.lefevre@example.fr",
+        "apogee": "765432123",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Ava",
+        "lastName": "Taylor",
+        "password": "pass123",
+        "email": "ava.taylor@example.com",
+        "apogee": "F8765432",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Mathis",
+        "lastName": "Martin",
+        "password": "test123",
+        "email": "mathis.martin@example.fr",
+        "apogee": "123456765",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Chloe",
+        "lastName": "Smith",
+        "password": "mypassword123",
+        "email": "chloe.smith@example.com",
+        "apogee": "G4321567",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Liam",
+        "lastName": "Davis",
+        "password": "12345",
+        "email": "liam.davis@example.com",
+        "apogee": "876543234",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "John",
+        "lastName": "Doe",
+        "password": "password1",
+        "email": "john.doe@example.com",
+        "apogee": "1234567890",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "password": "password2",
+        "email": "jane.smith@example.com",
+        "apogee": "0987654321",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Alice",
+        "lastName": "Johnson",
+        "password": "password3",
+        "email": "alice.johnson@example.com",
+        "apogee": "5678901234",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Bob",
+        "lastName": "Brown",
+        "password": "password4",
+        "email": "bob.brown@example.com",
+        "apogee": "6789012345",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Emma",
+        "lastName": "Wilson",
+        "password": "password5",
+        "email": "emma.wilson@example.com",
+        "apogee": "4567890123",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "James",
+        "lastName": "Anderson",
+        "password": "password6",
+        "email": "james.anderson@example.com",
+        "apogee": "2345678901",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Olivia",
+        "lastName": "Martinez",
+        "password": "password7",
+        "email": "olivia.martinez@example.com",
+        "apogee": "3456789012",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "William",
+        "lastName": "Lopez",
+        "password": "password8",
+        "email": "william.lopez@example.com",
+        "apogee": "7890123456",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Sophia",
+        "lastName": "Garcia",
+        "password": "password9",
+        "email": "sophia.garcia@example.com",
+        "apogee": "8901234567",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Liam",
+        "lastName": "Taylor",
+        "password": "password10",
+        "email": "liam.taylor@example.com",
+        "apogee": "9012345678",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Mia",
+        "lastName": "Davis",
+        "password": "password11",
+        "email": "mia.davis@example.com",
+        "apogee": "4567890123",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Benjamin",
+        "lastName": "Hernandez",
+        "password": "password12",
+        "email": "benjamin.hernandez@example.com",
+        "apogee": "5678901234",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Ava",
+        "lastName": "Gonzalez",
+        "password": "password13",
+        "email": "ava.gonzalez@example.com",
+        "apogee": "2345678901",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Lucas",
+        "lastName": "Rodriguez",
+        "password": "password14",
+        "email": "lucas.rodriguez@example.com",
+        "apogee": "3456789012",
+        "image": null,
+        "role": "USER"
+    },
+    {
+        "firstName": "Charlotte",
+        "lastName": "Perez",
+        "password": "password15",
+        "email": "charlotte.perez@example.com",
+        "apogee": "7890123456",
+        "image": null,
+        "role": "USER"
+    }
+];
+
+

@@ -1,0 +1,42 @@
+
+1.sur les entités qui sont en relations.
+il faut chosir un qui sera le parent des autres.
+qui va contenir tout les infos des autres.
+et les autres entités on va afficher le parent à travers des methodes.
+
+2.Pour faire ça , si par exp : Association doit afficher des Commentaires.
+à son tour Comment sera le parent des entités qu'il a en relation etc...
+
+3. Respecter les Helpers Méthodes et faire comme ils doivent être faite (OPENCLASSROOM)
+
+4. Lorsque on a beaucoup des entités en relations. pour sauvegarder une entités
+Plusieur façon de faire. Mais en fin de compte L'entité en question doit prendre
+comme paramètre les ID des eentités en relation. Klk soit l'entité
+
+exp : dans notre cas si on est dans ResponseService , il prendra les ID de UserInfo et Comment.
+ça dépendra du service avec lequel tu travailles.
+Mais dans les entités en relation une doit prendre les ID des autres. et majorité c'est le PARENT choisi.
+
+
+5.on utilise ResponseEntity pour mieux controller les données et les renvoies des reponses.
+
+6. dans les relations bidirectionnelles  , lorsque on save ou remove.  il faut tjrs
+aller chercher les entités dans la BDD avec respository avant de faire des actions d'AJOUT ou SUPPRESSION sinon ça ne marchera pas
+exp :
+     public Association saveBenevole(Long assoId, Long userInfoID) {
+
+         Association association = associationRepository.findById(assoId).orElse(null) ;
+         UserInfo userInfo = userRepository.findById(userInfoID).orElse(null) ;
+         if(association != null && userInfo != null) {
+
+            userInfo.addAssociations(association);//intègre une association
+             // je dois soir enregistrer dans BDD l'une des deux entités. et les cascades s'en chargera de sauvegarder l'autre
+            return associationRepository.save(association) ;
+
+         }
+         return null;
+     }
+
+     //que sa soit avec Long ou entity . mais faut aller chercher avec repository.
+     j'avais pas chercher userInfo avec repository et directement j'ai utilisé l'entité que je reçevais
+     et ça m'a génerée des incohérence.

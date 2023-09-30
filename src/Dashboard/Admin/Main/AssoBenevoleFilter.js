@@ -8,11 +8,9 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 
-
-
 const ITEM_HEIGHT = 48;
 
-export default function ComFilter(props) {
+export default function AssoBenevoleFilter(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -22,8 +20,8 @@ export default function ComFilter(props) {
     setAnchorEl(null);
   };
 
-  const handleDisplayComments = (association) => {
-    props.comments(association);
+  const handleDisplayBenevoles = (association) => {
+    props.benevole(association);
 
     handleClose();
   };
@@ -81,7 +79,7 @@ export default function ComFilter(props) {
             <MenuItem
               key={index}
               selected={association.id === 1}
-              onClick={() => handleDisplayComments(association)}
+              onClick={() => handleDisplayBenevoles(association)}
               className="w-10"
             >
               {association.id} - {association.name}

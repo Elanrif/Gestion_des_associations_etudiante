@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
@@ -8,28 +8,26 @@ import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import { SiLoopback } from "react-icons/si";
 import { Link, NavLink } from "react-router-dom";
 import { HiOutlineLogout } from "react-icons/hi";
+import { deepOrange, deepPurple } from "@mui/material/colors";
+import Avatar from "@mui/material/Avatar";
 import MenuAccount from "./MenuAccount";
+import { UserInfoContext } from "../../AuthContext";
 
 const SidebarU = () => {
+
+  const { userConnected, setUserConnected } = useContext(UserInfoContext);
+
   const menus = [
     { name: "Page d'acceuil", link: "/", icon: AiOutlineHome },
-    { name: "Tableau de Bord", link: "/dashboard/user/acceuil", icon: MdOutlineDashboard },
+
     {
       name: "Mon compte",
       link: "/dashboard/user/profile",
       icon: AiOutlineUser,
       margin: true,
-      desctivate :true
+      desctivate: true,
     },
-    { name: "Articles", link: "/admin/articles", icon: FiFolder },
-    { name: "Commandes", link: "/admin/orders", icon: FiShoppingCart },
-    {
-      name: "Commentaire",
-      link: "/comment",
-      icon: AiOutlineHeart,
-      margin: true,
-    },
-    { name: "Déconnexion", link: "/logout", icon: HiOutlineLogout },
+    { name: "Mes Associations", link: "/dashboard/user/associations", icon: FiFolder },
   ];
   const [open, setOpen] = useState(true);
   return (
@@ -39,7 +37,30 @@ const SidebarU = () => {
           open ? "w-72" : "w-16"
         } duration-500 text-gray-100 fixed px-4`}
       >
-        <div className="py-3 flex justify-end">
+        <div
+          className={`py-3 ${open && "justify-evenly  p-3"}  flex justify-end`}
+        >
+          <div
+            className={`w-[16] center text-center mx-auto duration-300 ${
+              open ? "block" : "hidden"
+            }`}
+          >
+            <Avatar
+              sx={{ bgcolor: deepOrange[500], width: 80, height: 80 }}
+              className="mx-auto"
+              src={
+                userConnected.image
+                  ? `data:image;base64,${userConnected.image}`
+                  : "/image/main/person.jpeg"
+              }
+            >
+              {userConnected.image === null &&
+                userConnected.firstName.slice(0, 1)}
+            </Avatar>
+            <p className="mt-3 text-lg font-semibold lowercase italic text-extralight">
+              {userConnected.email}
+            </p>
+          </div>
           <HiMenuAlt3
             size={26}
             className="cursor-pointer"
@@ -83,7 +104,7 @@ const SidebarU = () => {
               </h2>
             </NavLink>
           ))}
-            <MenuAccount />
+          <MenuAccount />
         </div>
       </div>
     </section>

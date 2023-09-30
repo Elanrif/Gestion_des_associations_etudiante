@@ -56,8 +56,6 @@ export default function AssoFilter(props) {
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-        <Typography sx={{ minWidth: 100 }}>Profile</Typography>
         <Tooltip
           title="Filtre"
           className="hover:cursor-pointer hover:text-blue-500 duration-300"

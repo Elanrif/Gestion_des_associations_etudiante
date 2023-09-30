@@ -42,7 +42,7 @@ export default function CardMainSection(props) {
   return (
     <>
       {event && (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, height: 500 }} className="overflow-auto">
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

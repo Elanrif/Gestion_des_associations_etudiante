@@ -20,6 +20,9 @@ import DeleteAe from "../AssociationForm/DeleteAe";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import AssoFilter from "./AssoFilter";
 import ComFilter from "./ComFilter";
+import CommentFilter from "./CommentFilter";
+import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
+import {BiSolidMessageRoundedDetail} from "react-icons/bi"
 
 const BootstrapTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -35,11 +38,34 @@ const BootstrapTooltip = styled(({ className, ...props }) => (
 l'id avec les paramètre de la function createData. sinon ça ne marchera pas. */
 const columns = [
   { id: "key", label: "#", minWidth: null },
-  { id: "image", label: "Image", minWidth: 10 },
-  { id: "nom", label: "Nom", minWidth: 10 },
-  { id: "def", label: "Def", minWidth: null },
-  { id: "desc", label: "Desc", minWidth: null },
-  { id: "date", label: "Date Création", minWidth: null },
+  {
+    id: "content",
+    label: (
+      <div className="flex items-center space-x-2">
+        <BiSolidMessageRoundedDetail size="20px" className="text-blue-700"/> <p>Message</p>
+      </div>
+    ),
+    minWidth: 10,
+  },
+  {
+    id: "liked",
+    label: (
+      <div className="flex items-center space-x-2">
+        <AiOutlineLike size="20px" className="text-blue-700"/> <p>Nbre like</p>
+      </div>
+    ),
+    minWidth: 10,
+  },
+  {
+    id: "disliked",
+    label: (
+      <div className="flex items-center space-x-2">
+        <AiOutlineDislike size="20px" className="text-blue-700"/> <p>Nbre dislike</p>
+      </div>
+    ),
+    minWidth: null,
+  },
+  { id: "date", label: "Date", minWidth: null },
   { id: "option", label: "OPTION", minWidth: null },
 ];
 
@@ -47,8 +73,8 @@ const handleClickTable = (e) => {
   console.log("vous avez supprimer : ", e);
 };
 
-function createData(key, image, nom, def, desc, date, option) {
-  return { key, image, nom, def, desc, date, option };
+function createData(key, content, liked, disliked, date, option) {
+  return { key, content, liked,  disliked, date, option };
 }
 
 export default function Comments() {
@@ -65,6 +91,8 @@ export default function Comments() {
   };
 
   const [comments, setComments] = useState([]);
+
+  const [associations, setAssociations] = useState([]);
   const [search, setSearch] = useState({
     response: "",
   });
@@ -74,33 +102,46 @@ export default function Comments() {
   /* ainsi on évite l'erreur 'row.slice is not a function.....' */
 
   useEffect(() => {
-    display();
+    displayComments();
   }, [leuci]);
 
-  /* sur POSTMAIN, il a un size qu'il ne peut pas dépassé pour prendre les objets,
-    on a pas ce problème sur 'axios' heureusement */
-  const play = () => {
+  React.useEffect(() => {
+    // handleDisplayEvents();
+    findAllAssociations();
+  }, []);
+
+  const findAllAssociations = () => {
     axios
-      .get("http://localhost:8080/association/findByName/containing", {
-        params: {
-          name: "de",
-        },
-      })
+      .get("/association/find/all")
       .then((response) => {
-        setComments(response.data);
-        console.log("containging : ", response.data);
+        // on va filter par ceux qui ont des events
+
+        const filteredData = response.data.filter(
+          (item) => item.comments.length > 0
+        );
+        // .length , car !=null , est faux : null # [] (tableau  vide.)
+        //aussi , table Association on a events = new ArrayList([]) , un tableau vide par défaut
+
+        // Si vous souhaitez ensuite utiliser setAssociations pour mettre à jour les associations
+        setAssociations(filteredData);
+
+        // setAssociations(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const display = () => {
+  /* on prends un param qui est une association et on set les commentaires de cette association  */
+  const handleDisplayComments = (association) => {
+    setComments(association.comments);
+  };
+
+  const displayComments = () => {
     axios
-      .get("http://localhost:8080/association/find/all")
+      .get("/comment/findAll")
       .then((response) => {
         setComments(response.data);
-        console.log("Main/User/Associations : association", response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -112,20 +153,7 @@ export default function Comments() {
     <div className="flex ">
       <DeleteAe association={e} loadAsso={() => setLeuci(leuci + 1)} />
 
-      <button onClick={() => handleClickTable(e)}>
-        <Link to={`/dashboard/admin/association/update/${e.id}`}>
-          <BootstrapTooltip title="Modifier">
-            <div className="group w-[3rem] flex items-center justify-center">
-              <RxUpdate
-                size="1.3rem"
-                className="text-blue-700 group-hover:text-cyan-500 duration-300"
-              />
-            </div>
-          </BootstrapTooltip>
-        </Link>
-      </button>
-
-      <button onClick={() => handleClickTable(e)}>
+      <button onClick={() => handleClickTable(e)} className="mx-3">
         <BootstrapTooltip title="Information">
           <div className="group flex items-center justify-center">
             <FcInfo
@@ -141,14 +169,11 @@ export default function Comments() {
   const rows = comments.map((item, index) =>
     createData(
       index + 1,
-      item.image,
-      item.name,
       <div className="">
-        {item.def && item.def.split(" ").slice(0, 3).join(" ")} ...
+        {item.content && item.content.split(" ").slice(0, 6).join(" ")} ...
       </div>,
-      <div className="">
-        {item.desc && item.desc.split(" ").slice(0, 3).join(" ")} ...
-      </div>,
+      item.liked,
+      item.disliked,
       item.date,
       opt(item)
     )
@@ -163,38 +188,13 @@ export default function Comments() {
     }));
 
     axios
-      .get("http://localhost:8080/association/findByName/containing", {
+      .get("/comment/findByContentContaining", {
         params: {
           name: `${value}`,
         },
       })
       .then((response) => {
         setComments(response.data);
-        console.log("containging : ", response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const filterNameAsc = () => {
-    axios
-      .get("http://localhost:8080/association/findAllByOrderByNameAsc")
-      .then((response) => {
-        setComments(response.data);
-        console.log("name Asc : ", response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const filterNameDesc = () => {
-    axios
-      .get("http://localhost:8080/association/findAllByOrderByNameDesc")
-      .then((response) => {
-        setComments(response.data);
-        console.log("name Desc : ", response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -203,10 +203,9 @@ export default function Comments() {
 
   const filterDateAsc = () => {
     axios
-      .get("http://localhost:8080/association/findAllByOrderByDateAsc")
+      .get("/comment/findAllByOrderByDateAsc")
       .then((response) => {
         setComments(response.data);
-        console.log("name Desc : ", response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -215,10 +214,9 @@ export default function Comments() {
 
   const filterDateDesc = () => {
     axios
-      .get("http://localhost:8080/association/findAllByOrderByDateDesc")
+      .get("/comment/findAllByOrderByDateDesc")
       .then((response) => {
         setComments(response.data);
-        console.log("name Desc : ", response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -233,16 +231,19 @@ export default function Comments() {
             liste des Commentaires
           </h1>
           <Link to="/dashboard/admin/association/save">
-            <button className="px-2 py-1 my-3 ms-3 capitalize text-white rounded-lg hover:bg-blue-700 bg-blue-400 duration-300 ease-in-out">
+            <button className="px-2 py-1 my-3 ms-3 hover:cursor-default capitalize text-blue-700 rounded-lg bg-blue-700 duration-300 ease-in-out">
               ajouter
             </button>
           </Link>
         </div>
 
-        <div>
+        <div className="flex items-center space-x-1">
           <ComFilter
-            filterByNameAsc={filterNameAsc}
-            filterByNameDesc={filterNameDesc}
+            value={associations && associations}
+            comments={handleDisplayComments}
+            initial={displayComments}
+          />
+          <CommentFilter
             filterByDateAsc={filterDateAsc}
             filterByDateDesc={filterDateDesc}
           />

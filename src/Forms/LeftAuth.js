@@ -41,7 +41,7 @@ function LeftAuth({ name, content,data,admin ,nom}) {
         </h1>
         <p className="my-5 max-w-[30rem]"> {content}</p>
         <Link
-          to="/dashboard/user"
+          to="/dashboard/user/profile"
           className="ring-2 ring-white font-bold hover:ring-blue-700 hover:text-blue-800 px-4 text-xl py-2 uppercase rounded-full"
         >
           {name}

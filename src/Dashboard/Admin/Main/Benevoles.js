@@ -20,6 +20,7 @@ import DeleteAe from "../AssociationForm/DeleteAe";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import AssoFilter from "./AssoFilter";
 import BeneFilter from "./BeneFilter";
+import AssoBenevoleFilter from "./AssoBenevoleFilter";
 
 const BootstrapTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -36,10 +37,10 @@ l'id avec les paramètre de la function createData. sinon ça ne marchera pas. *
 const columns = [
   { id: "key", label: "#", minWidth: null },
   { id: "image", label: "Image", minWidth: 10 },
-  { id: "nom", label: "Nom", minWidth: 10 },
-  { id: "def", label: "Def", minWidth: null },
-  { id: "desc", label: "Desc", minWidth: null },
-  { id: "date", label: "Date Création", minWidth: null },
+  { id: "apogee", label: "Apogee", minWidth: 10 },
+  { id: "firstName", label: "Nom", minWidth: 10 },
+  { id: "lastName", label: "Prenom", minWidth: null },
+  { id: "email", label: "Email", minWidth: null },
   { id: "option", label: "OPTION", minWidth: null },
 ];
 
@@ -47,13 +48,15 @@ const handleClickTable = (e) => {
   console.log("vous avez supprimer : ", e);
 };
 
-function createData(key, image, nom, def, desc, date, option) {
-  return { key, image, nom, def, desc, date, option };
+//mettre les id de columns 
+function createData(key, image, apogee, firstName, lastName, email, option) {
+  return { key, image, apogee, firstName, lastName, email, option };
 }
 
 export default function Benevoles() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [associations, setAssociations] = useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -69,42 +72,55 @@ export default function Benevoles() {
     response: "",
   });
 
-  const [leuci, setLeuci] = useState(0);
-  /* il faut préciser le type de useState que c'est un tableau [] */
-  /* ainsi on évite l'erreur 'row.slice is not a function.....' */
-
   useEffect(() => {
-    display();
-  }, [leuci]);
-
-  /* sur POSTMAIN, il a un size qu'il ne peut pas dépassé pour prendre les objets,
-    on a pas ce problème sur 'axios' heureusement */
-  const play = () => {
+    findAllAssociations();
+  }, []);
+  /* chercher par les associations dont les membres sont déjà présente ici.
+   * ça ne sert a rien d'afficher une asso qui n'a pas de membre de bureau par exemple.
+   */
+  const findAllAssociations = () => {
     axios
-      .get("http://localhost:8080/association/findByName/containing", {
-        params: {
-          name: "de",
-        },
-      })
+      .get("/association/find/all")
       .then((response) => {
-        setBenevoles(response.data);
-        console.log("containging : ", response.data);
+        // on va filter par ceux qui ont des membres de bureaus
+
+        const filteredData = response.data.filter(
+          (item) => item.benevoles.length > 0
+        );
+        // .length , car !=null , est faux : null # [] (tableau  vide.)
+
+        // Si vous souhaitez ensuite utiliser setAssociations pour mettre à jour les associations
+        setAssociations(filteredData);
+
+        // setAssociations(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const display = () => {
+  const [leuci, setLeuci] = useState(0);
+  /* il faut préciser le type de useState que c'est un tableau [] */
+  /* ainsi on évite l'erreur 'row.slice is not a function.....' */
+
+  useEffect(() => {
+    displayBenevoles();
+  }, [leuci]);
+
+  const displayBenevoles = () => {
     axios
-      .get("http://localhost:8080/association/find/all")
+      .get("/user/allBenevoles")
       .then((response) => {
         setBenevoles(response.data);
-        console.log("Main/User/Associations : association", response.data);
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  /* on prends un param qui est une association  */
+  const handleDisplayBenevoles = (association) => {
+    setBenevoles(association.benevoles);
   };
 
   /* en +,tu peux mettre des fonctions , composant etc.... Dans cette fonction tu peux modifier les valeurs , même envoyé des <div> */
@@ -112,20 +128,7 @@ export default function Benevoles() {
     <div className="flex ">
       <DeleteAe association={e} loadAsso={() => setLeuci(leuci + 1)} />
 
-      <button onClick={() => handleClickTable(e)}>
-        <Link to={`/dashboard/admin/association/update/${e.id}`}>
-          <BootstrapTooltip title="Modifier">
-            <div className="group w-[3rem] flex items-center justify-center">
-              <RxUpdate
-                size="1.3rem"
-                className="text-blue-700 group-hover:text-cyan-500 duration-300"
-              />
-            </div>
-          </BootstrapTooltip>
-        </Link>
-      </button>
-
-      <button onClick={() => handleClickTable(e)}>
+      <button onClick={() => handleClickTable(e)} className="mx-3">
         <BootstrapTooltip title="Information">
           <div className="group flex items-center justify-center">
             <FcInfo
@@ -138,21 +141,25 @@ export default function Benevoles() {
     </div>
   );
 
-  const rows = benevoles.map((item, index) =>
-    createData(
-      index + 1,
-      item.image,
-      item.name,
-      <div className="">
+  /*    <div className="">
         {item.def && item.def.split(" ").slice(0, 3).join(" ")} ...
       </div>,
       <div className="">
         {item.desc && item.desc.split(" ").slice(0, 3).join(" ")} ...
-      </div>,
-      item.date,
-      opt(item)
-    )
-  );
+      </div>, */
+  const rows = benevoles
+    .sort((a, b) => b.id - a.id)
+    .map((item, index) =>
+      createData(
+        index + 1,
+        item.image,
+        item.apogee,
+        item.firstName,
+        item.lastName,
+        item.email,
+        opt(item)
+      )
+    );
 
   const handlChange = (e) => {
     const { name, value } = e.target;
@@ -162,69 +169,10 @@ export default function Benevoles() {
       [name]: value,
     }));
 
-    axios
-      .get("http://localhost:8080/association/findByName/containing", {
-        params: {
-          name: `${value}`,
-        },
-      })
-      .then((response) => {
-        setBenevoles(response.data);
-        console.log("containging : ", response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+   
   };
 
-  const filterNameAsc = () => {
-    axios
-      .get("http://localhost:8080/association/findAllByOrderByNameAsc")
-      .then((response) => {
-        setBenevoles(response.data);
-        console.log("name Asc : ", response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const filterNameDesc = () => {
-    axios
-      .get("http://localhost:8080/association/findAllByOrderByNameDesc")
-      .then((response) => {
-        setBenevoles(response.data);
-        console.log("name Desc : ", response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const filterDateAsc = () => {
-    axios
-      .get("http://localhost:8080/association/findAllByOrderByDateAsc")
-      .then((response) => {
-        setBenevoles(response.data);
-        console.log("name Desc : ", response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const filterDateDesc = () => {
-    axios
-      .get("http://localhost:8080/association/findAllByOrderByDateDesc")
-      .then((response) => {
-        setBenevoles(response.data);
-        console.log("name Desc : ", response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
+  
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -232,19 +180,19 @@ export default function Benevoles() {
           <h1 className="ms-3 mt-4 text-md uppercase text-2xl font-black text-slate-500">
             liste des Bénévoles
           </h1>
-          <Link to="/dashboard/admin/association/save">
-            <button className="px-2 py-1 my-3 ms-3 capitalize text-white rounded-lg hover:bg-blue-700 bg-blue-400 duration-300 ease-in-out">
+          <Link >
+            <button className=" text-blue-700 px-2 py-1 my-3 ms-3 capitalize rounded-lg bg-blue-700 duration-300 ease-in-out">
               ajouter
             </button>
           </Link>
         </div>
 
-        <div>
-          <BeneFilter
-            filterByNameAsc={filterNameAsc}
-            filterByNameDesc={filterNameDesc}
-            filterByDateAsc={filterDateAsc}
-            filterByDateDesc={filterDateDesc}
+        <div className="flex items-center space-x-1">
+        
+          <AssoBenevoleFilter
+            value={associations && associations}
+            benevole={handleDisplayBenevoles}
+            initial={displayBenevoles}
           />
         </div>
 

@@ -2,3 +2,9 @@ pour React Slick :
 les slides s'afficherons avec les icons : s'il y'en a plus que dans le slidesToShow
 personnalisé les icons : ajouté un padding et background
 aussi le responsive, choisir les bons parmètres.
+
+
+*send git repository* 
+git add . 
+git commit -m "Votre message descriptif ici"
+git push origin project

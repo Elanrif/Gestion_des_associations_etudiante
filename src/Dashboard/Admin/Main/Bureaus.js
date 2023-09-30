@@ -105,7 +105,7 @@ export default function Bureaus() {
 
   const displayBureaus = () => {
     axios
-      .get("http://localhost:8080/bureau/findAll")
+      .get("/bureau/findAll")
       .then((response) => setBureaus(response.data))
       .catch((error) => {
         console.log("error : ", error);

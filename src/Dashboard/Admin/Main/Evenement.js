@@ -85,7 +85,7 @@ export default function Evenement() {
 
   const displayEvents = () => {
     axios
-      .get("http://localhost:8080/evenement/find/all")
+      .get("/evenement/find/all")
       .then((response) => {
         setEvents(response.data);
       })
@@ -150,7 +150,7 @@ export default function Evenement() {
 
     axios
       .get(
-        "http://localhost:8080/evenement/findByTypeContainingOrDescpContaining",
+        "/evenement/findByTypeContainingOrDescpContaining",
         {
           params: {
             name: `${value}`,
@@ -168,7 +168,7 @@ export default function Evenement() {
 
   const findAllAssociations = () => {
     axios
-      .get("http://localhost:8080/association/find/all")
+      .get("/association/find/all")
       .then((response) => {
         // on va filter par ceux qui ont des events
 
@@ -195,7 +195,7 @@ export default function Evenement() {
 
   const filterTypeAsc = () => {
     axios
-      .get("http://localhost:8080/evenement/findAllByOrderByTypeAsc")
+      .get("/evenement/findAllByOrderByTypeAsc")
       .then((response) => {
         setEvents(response.data);
         console.log("name Asc : ", response.data);
@@ -207,7 +207,7 @@ export default function Evenement() {
 
   const filterTypeDesc = () => {
     axios
-      .get("http://localhost:8080/evenement/findAllByOrderByTypeDesc")
+      .get("/evenement/findAllByOrderByTypeDesc")
       .then((response) => {
         setEvents(response.data);
         console.log("name Desc : ", response.data);
@@ -219,7 +219,7 @@ export default function Evenement() {
 
   const filterDateAsc = () => {
     axios
-      .get("http://localhost:8080/evenement/findAllByOrderByDateAsc")
+      .get("/evenement/findAllByOrderByDateAsc")
       .then((response) => {
         setEvents(response.data);
         console.log("name Desc : ", response.data);
@@ -231,7 +231,7 @@ export default function Evenement() {
 
   const filterDateDesc = () => {
     axios
-      .get("http://localhost:8080/evenement/findAllByOrderByDateDesc")
+      .get("/evenement/findAllByOrderByDateDesc")
       .then((response) => {
         setEvents(response.data);
         console.log("name Desc : ", response.data);

@@ -35,6 +35,7 @@ import Benevoles from "./Dashboard/Admin/Main/Benevoles";
 import { UserInfoContext } from "./AuthContext"; /* un context peut être utilisé plusieur fois sur différent endroit ou même imbriqué*/
 import Account from "./Dashboard/User/Account";
 import PageNotFound from "./PageNotFound";
+import AssociationAuth from "./Dashboard/User/Main/Association";
 
 
 function App() {
@@ -55,10 +56,10 @@ function App() {
     useEffect(() => {
       console.log("App.js :: User :  ", userConnected);
 
-      /* quand on avorte le projet on a à faire ça
+     /* // quand on avorte le projet on a à faire ça
       sessionStorage.removeItem("auth")
-      setUserLoading(false)
-     */
+      setUserLoading(false) */
+    
     }, [userLoading])
 
     /* useEffect(()=>{
@@ -69,7 +70,9 @@ function App() {
   return (
     <div className="mb-10">
       {/* je passe a tout mes Route le userConnected et setUserConnected ainsi je peux acçeder a n'important quel composant en utilisante le useContext UserInfoContext */}
-      <UserInfoContext.Provider value={{ userConnected, setUserConnected ,userLoading,setUserLoading}}>
+      <UserInfoContext.Provider
+        value={{ userConnected, setUserConnected, userLoading, setUserLoading }}
+      >
         {/* je passe les 2 au cas ou je voudrais modifier le state */}
 
         <Routes>
@@ -111,8 +114,8 @@ function App() {
             <>
               <Route path="/dashboard/user" element={<DashboardU />}>
                 <Route index="acceuil" element={<MainU />} />
-                <Route path="acceuil" element={<MainU />} />
-                <Route path ="profile" element={<Account/> }/>
+                <Route path="profile" element={<Account />} />
+                <Route path="associations" element={<AssociationAuth />} />
               </Route>
 
               <Route
@@ -132,7 +135,7 @@ function App() {
 
           {/* user fin  */}
 
-          { (userLoading && userConnected.role === "ADMIN") &&
+          {userLoading && userConnected.role === "ADMIN" && (
             <>
               <Route path="/dashboard/admin" element={<DashboardA />}>
                 <Route index="main" element={<MainA />} />
@@ -177,8 +180,8 @@ function App() {
                 element={<UpdateEvent />}
               />
             </>
-          }
-          <Route path="*" element={<PageNotFound/>}/>
+          )}
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </UserInfoContext.Provider>
     </div>

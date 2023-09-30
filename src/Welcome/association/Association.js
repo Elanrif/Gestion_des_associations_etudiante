@@ -7,6 +7,7 @@ import Comment from "./Event/Comment";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { AssoContext } from "../../Dashboard/Admin/Context";
+import BackDrop from "../../BackDrop";
 
 const Association = () => {
 
@@ -65,7 +66,8 @@ const Association = () => {
       ) : (
         <div>
           {/* par défaut tjrs on va entrer ici car useState association est à null. */}
-          <p> Aucune association existante !</p>
+          
+            <BackDrop/>
         </div>
       )}
     </>

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -7,17 +6,17 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { UserInfoContext } from "../../AuthContext";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-
-export default function MenuAccount() {
-
-  const navigate = useNavigate() 
-
+export default function CommentFilter(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -27,43 +26,37 @@ export default function MenuAccount() {
     setAnchorEl(null);
   };
 
-  const { userConnected,setUserConnected, setUserLoading } = React.useContext(UserInfoContext); 
+  
+  const filterDateAsc = () => {
+    props.filterByDateAsc();
 
-  const logout = ()=>{
+    handleClose();
+  };
 
-    sessionStorage.removeItem("auth") 
+  const filterDateDesc = () => {
+    props.filterByDateDesc();
 
-    setUserLoading(false) /* dans ma logique on déconnecte le USER  */
-    setUserConnected({}) /* si on met a null , on aura des erreus. on modifier le userConnected  a un objet {} vide comme lors de l'initialisation */
-    
-     //pour que dans App.js si on actualise la page le state sera initialisé par la session.
-        sessionStorage.removeItem("auth")
-    
-    navigate("/login")
-    handleClose() ; 
-  }
-
+    handleClose();
+  };
 
   return (
     <React.Fragment>
-      <Box
-        sx={{ display: "flex", alignItems: "center", textAlign: "start" }}
-        className="hover:bg-orange-400 rounded-md"
-      >
-        <Tooltip title="Account settings">
-          <IconButton
+      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+        <Tooltip
+          title="Trier par..."
+          className="hover:cursor-pointer hover:text-blue-500 duration-300"
+          arrow
+        >
+          <FilterListIcon
             onClick={handleClick}
             size="small"
-            sx={{ ml: 0 }}
+            sx={{ ml: 2 }}
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <div className="flex items-center space-x-3">
-              <Avatar sx={{ width: 32, height: 32 }} src= {userConnected.image &&  `data:image/jpeg;base64,${userConnected.image}`} />
-              <div className="text-white text-sm font-medium">Mon compte</div>
-            </div>
-          </IconButton>
+            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+          </FilterListIcon>
         </Tooltip>
       </Box>
       <Menu
@@ -101,34 +94,24 @@ export default function MenuAccount() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
+       <Divider />
         <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
+          <FilterListIcon>
+            <PersonAdd fontSize="small" />
+          </FilterListIcon>
+          &nbsp; &nbsp; Trier par ...
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
+        <MenuItem onClick={filterDateAsc}>
+          <ArrowDropUpIcon>
+            <Settings fontSize="small" />
+          </ArrowDropUpIcon>
+          &nbsp; Date accroissant
         </MenuItem>
-        <Divider />
-        <Link to="/dashboard/user/update">
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <PersonAdd fontSize="small" />
-            </ListItemIcon>
-            Modifier compte
-          </MenuItem>
-        </Link>
-        <Link to="/dashboard/user/update/password">
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            Mot de passe
-          </MenuItem>
-        </Link>
-        <MenuItem onClick={logout}>
-          <ListItemIcon>
+        <MenuItem onClick={filterDateDesc}>
+          <ArrowDropDownIcon>
             <Logout fontSize="small" />
-          </ListItemIcon>
-          Déconneter
+          </ArrowDropDownIcon>
+          &nbsp;Date décroissant
         </MenuItem>
       </Menu>
     </React.Fragment>

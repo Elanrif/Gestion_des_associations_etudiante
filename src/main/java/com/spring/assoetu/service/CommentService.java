@@ -4,10 +4,11 @@ import com.spring.assoetu.entity.Association;
 import com.spring.assoetu.entity.Comment;
 import com.spring.assoetu.entity.Comment;
 import com.spring.assoetu.entity.UserInfo;
+import com.spring.assoetu.repository.CommentRepository;
 
 import java.util.List;
 
-public interface CommentService {
+public interface CommentService  {
 
 
     public Comment saveInAssoWithUser(Long  associationId , Long userInfoId , Comment comment) ;
@@ -25,4 +26,8 @@ public interface CommentService {
     public void deleteAllComment() ;
     public List<Comment> findAllComments();
     public List<Comment> findAllCommentsByAssociation(Long id) ;
+    List<Comment> findByContentContaining(String name) ;
+    List<Comment> findAllByOrderByDateAsc();
+    List<Comment> findAllByOrderByDateDesc();
+
 }

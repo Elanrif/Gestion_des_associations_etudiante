@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/comment")
-public class CommentController {
+public class CommentController implements CommentService{
 
     @Autowired
     private CommentService commentService ;
@@ -99,5 +99,20 @@ public class CommentController {
      @GetMapping("/findAllCommentsByAssociation/{id}")
     public List<Comment> findAllCommentsByAssociation(Long id) {
         return commentService.findAllCommentsByAssociation(id);
+    }
+
+    @GetMapping("/findByContentContaining")
+    public List<Comment> findByContentContaining(String name) {
+        return commentService.findByContentContaining(name);
+    }
+
+    @GetMapping("/findAllByOrderByDateAsc")
+    public List<Comment> findAllByOrderByDateAsc() {
+        return commentService.findAllByOrderByDateAsc();
+    }
+
+    @GetMapping("/findAllByOrderByDateDesc")
+    public List<Comment> findAllByOrderByDateDesc() {
+        return commentService.findAllByOrderByDateDesc();
     }
 }

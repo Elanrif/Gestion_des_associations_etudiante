@@ -8,7 +8,6 @@ import com.spring.assoetu.repository.CommentRepository;
 import com.spring.assoetu.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -163,5 +162,20 @@ public class CommentServiceImpl implements CommentService{
             return association.getComments() ;
         }
         return null;
+    }
+
+    @Override
+    public List<Comment> findByContentContaining(String name) {
+        return commentRepository.findByContentContaining(name);
+    }
+
+    @Override
+    public List<Comment> findAllByOrderByDateAsc() {
+        return commentRepository.findAllByOrderByDateAsc();
+    }
+
+    @Override
+    public List<Comment> findAllByOrderByDateDesc() {
+        return commentRepository.findAllByOrderByDateDesc();
     }
 }

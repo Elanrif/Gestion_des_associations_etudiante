@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService{
 
         for(UserInfo userInfo : u){
 
-            if(userInfo.getAssociations() != null){
+            if(userInfo.getAssociations() != null &&  !userInfo.getAssociations().isEmpty()){//ou .size() > 0 : il n'y a pas .length
                 userInfos.add(userInfo) ;
             }
 

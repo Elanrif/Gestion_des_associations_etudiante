@@ -149,4 +149,19 @@ public class CommentServiceImpl implements CommentService{
     public void deleteAllComment() {
         commentRepository.deleteAll();
     }
+
+    @Override
+    public List<Comment> findAllComments() {
+        return commentRepository.findAll();
+    }
+
+    @Override
+    public List<Comment> findAllCommentsByAssociation(Long id) {
+        Association association = associationRepository.findById(id).get() ;
+
+        if(association != null) {
+            return association.getComments() ;
+        }
+        return null;
+    }
 }

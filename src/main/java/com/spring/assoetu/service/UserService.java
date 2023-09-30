@@ -24,4 +24,6 @@ public interface UserService {
     public void deleteUser(UserInfo userInfo);
     public void deleteUserById(Long id) ;
     public void deleteAllUser() ;
+    public List<UserInfo> findAllBenevoles() ;
+    public List<UserInfo> findAllBenevolesByAssociations(Long id) ;
 }

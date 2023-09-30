@@ -21,6 +21,7 @@ public interface AssociationService {
     public Association findOneAsociation(Long id);
     public List<Association> findAllAssociation();
     public List<Association> findByNameContaining(String name);
+    public List<Association> findByNameContainingv2(List<Association> associations,String name) ;
     public List<Association> findAllByOrderByNameAsc();
     public  List<Association> findAllByOrderByNameDesc();
     public  List<Association> findAllByOrderByDateAsc();
@@ -28,5 +29,6 @@ public interface AssociationService {
     public void deleteAssociation(Association association);
     public void deleteAssociationById(Long id) ;
     public void deleteAllAssociation() ;
+    public List<Association> userInfoAssociations(Long id) ;
 
 }

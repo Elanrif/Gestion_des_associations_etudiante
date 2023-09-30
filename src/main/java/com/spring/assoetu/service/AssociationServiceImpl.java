@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -139,6 +140,28 @@ public class AssociationServiceImpl implements AssociationService{
     }
 
     @Override
+    public List<Association> findByNameContainingv2(List<Association> associations,String name) {
+
+        List<Association> assos = new ArrayList<>();
+
+        /*for (Association association : associations) {
+            if (association.getName().contains(name)) {
+                assos.add(association);
+            }
+        }*/
+        for (Association association : associations) {
+            for (char character : name.toCharArray()) {
+                if (association.getName().contains(String.valueOf(character))) {
+                    assos.add(association);
+                    break; // Si on trouve un caractère, pas besoin de vérifier les autres
+                }
+            }
+        }
+
+        return assos;
+    }
+
+    @Override
     public List<Association> findAllByOrderByNameAsc() {
         return associationRepository.findAllByOrderByNameAsc();
     }
@@ -171,6 +194,15 @@ public class AssociationServiceImpl implements AssociationService{
     @Override
     public void deleteAllAssociation() {
         associationRepository.deleteAll();
+    }
+
+    //sur User on JsonIgnore des associations donc on prends l'id et on get les associations.
+    @Override
+    public List<Association> userInfoAssociations(Long id) {
+
+        UserInfo userInfo = userRepository.findById(id).orElse(null);
+
+        return userInfo.getAssociations();
     }
 
 

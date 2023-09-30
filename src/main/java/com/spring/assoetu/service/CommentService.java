@@ -23,4 +23,6 @@ public interface CommentService {
     public Comment removeLike(Long commentId) ;
     public Comment removeDisLike(Long commentId) ;
     public void deleteAllComment() ;
+    public List<Comment> findAllComments();
+    public List<Comment> findAllCommentsByAssociation(Long id) ;
 }

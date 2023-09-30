@@ -102,6 +102,16 @@ public class UserController {
         userService.deleteUser(userInfo);
     }
 
+    @GetMapping("/allBenevoles")
+    public List<UserInfo> findAllBenevoles() {
+        return userService.findAllBenevoles();
+    }
+
+   @GetMapping("/allBenevolesByAssociation/{id}")
+    public List<UserInfo> findAllBenevolesByAssociations(@PathVariable Long id) {
+        return userService.findAllBenevolesByAssociations(id);
+    }
+
     @DeleteMapping("/delete/all")
     public void deleteAll(){
         userService.deleteAllUser();

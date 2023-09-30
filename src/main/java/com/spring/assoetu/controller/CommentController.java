@@ -90,4 +90,14 @@ public class CommentController {
 
         commentService.deleteAllComment();
     }
+
+    @GetMapping("/findAll")
+    public List<Comment> findAllComments() {
+        return commentService.findAllComments();
+    }
+
+     @GetMapping("/findAllCommentsByAssociation/{id}")
+    public List<Comment> findAllCommentsByAssociation(Long id) {
+        return commentService.findAllCommentsByAssociation(id);
+    }
 }

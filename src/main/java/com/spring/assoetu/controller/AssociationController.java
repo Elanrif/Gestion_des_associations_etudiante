@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.spring.assoetu.entity.Association;
 import com.spring.assoetu.entity.UserInfo;
 import com.spring.assoetu.service.AssociationService;
+import com.spring.assoetu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -140,6 +141,12 @@ public class AssociationController {
         return associationService.findByNameContaining(name);
     }
 
+    @PostMapping("/findByName/containing/v2")
+    public List<Association> findByNameContainingv2(@RequestBody List<Association> associations,@RequestParam("name") String name){
+
+        return associationService.findByNameContainingv2(associations,name);
+    }
+
 
     @GetMapping("/findAllByOrderByNameAsc")
     public List<Association> findAllByOrderByNameAsc(){
@@ -180,5 +187,10 @@ public class AssociationController {
         associationService.deleteAllAssociation();
     }
 
+    @GetMapping("/userInfo/associations/{id}")
+    public List<Association> getUserInfoAssociations(@PathVariable Long id){
+
+        return associationService.userInfoAssociations(id);
+    }
 
 }

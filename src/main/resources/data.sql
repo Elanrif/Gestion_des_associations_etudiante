@@ -43,6 +43,18 @@ INSERT INTO ASSOCIATION (name, definition, description, date_creation, image) VA
     ("Associations et de Service", "Ces associations se concentrent sur des actions bénévoles et des projets de service à la communauté.", "Les associations humanitaires et de service sont axées sur la fourniture de services pour aider les personnes dans le besoin.", '2023-09-20', NULL);
 
 
+INSERT INTO commentaire (contenu, date, disliked, liked, association_id, user_id)
+VALUES
+  ('Super produit, je l\'adore !', '2023-10-03', 0, 0, 1, 1),
+  ('Excellent rapport qualité-prix.', '2023-10-04', 0, 0, 2, 2),
+  ('Livraison rapide et bien emballé.', '2023-10-05', 0, 0, 1, 3),
+  ('Je suis déçu de la qualité du produit.', '2023-10-06', 0, 0, 2, 4),
+  ('Service client très réactif, merci !', '2023-10-07', 0, 0, 1, 5),
+  ('Très satisfait de mon achat.', '2023-10-08', 0, 0, 2, 6);
+
+
+
+
 INSERT INTO EVENEMENT (type, description, date)
 VALUES
 ("Atelier de Développement Personnel", "Un atelier pour aider les étudiants à améliorer leurs compétences en communication et en gestion du temps.", "2023-09-15"),

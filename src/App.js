@@ -54,8 +54,8 @@ function App() {
 
   //puis ici dès que on se connecte je relance le useEffect
     useEffect(() => {
-      console.log("App.js :: User :  ", userConnected);
-
+   
+      console.log("auth : " , userConnected)
      /* // quand on avorte le projet on a à faire ça
       sessionStorage.removeItem("auth")
       setUserLoading(false) */

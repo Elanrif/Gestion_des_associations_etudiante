@@ -101,8 +101,8 @@ function Comment() {
             ) : (
               /* il n'a pas d'image */
               <Avatar sx={{ bgcolor: deepPurple[500] }} className="me-3">
-                {userConnected.firstName.slice(0, 1)}{" "}
-                {userConnected.lastName.slice(0, 1)}
+                {userConnected.firstName?.slice(0, 1)}{" "}
+                {userConnected.lastName?.slice(0, 1)}
               </Avatar>
             )
           ) : (

@@ -67,21 +67,21 @@ export default function Bureau(props) {
         <Avatar
           alt="Remy Sharp"
           src={
-            bureau && bureau.image && `data:image/jpeg;base64,${bureau.image}`
+            bureau?.image && `data:image/jpeg;base64,${bureau.image}`
           }
           sx={{ width: 200, height: 200 }}
           className="mx-auto"
         />
         <div className="text-center mt-5">
-          <h1 className="font-bold text-xl">{bureau && bureau.firstName}</h1>
-          <p className="text-slate-600 italic">{bureau && bureau.status}</p>
+          <h1 className="font-bold text-xl">{bureau?.firstName} {bureau?.lastName}</h1>
+          
         </div>
       </div>
 
                {/* ils prennent la même hauteur pour ne pas avoir du débordement  */}
       <div>
-        <aside className="max-w-[18rem] h-[6rem]  mt-3 pb-2  text-slate-600 text-center">
-          {bureau && bureau.desc/* .slice(0,190) */}
+        <aside className="max-w-[18rem] h-[6rem] capitalize text-lg mt-3  text-slate-600 text-center">
+          {bureau?.status/* .slice(0,190) */}
         </aside>
       </div>
 

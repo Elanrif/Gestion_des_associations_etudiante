@@ -13,7 +13,7 @@ function Header() {
     const items = [
           { text: "Acceuil", icon: <HiHome size="20px"/>, to : "/" },
           { text: <div><span className='md:block hidden'>Nous-contactez</span><span className='md:hidden block'>Contact</span></div>, icon: <BsFillTelephoneFill size="20px"/> ,to:"/nous-contacter"},
-          { text: "", icon: <CostomMenu/> },
+        
         
     ];
 
@@ -24,6 +24,7 @@ function Header() {
       </Link>
 
       <div className="flex space-x-5 items-center">
+
         {items.map((item, index) => {
          if(item.to == null){
            
@@ -51,6 +52,9 @@ function Header() {
              );
          }
         })}
+
+         <div><CostomMenu/></div>
+
       </div>
 
 

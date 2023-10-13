@@ -156,11 +156,6 @@ function CommentUser({comment}) {
 
     }
 
-    const handleUpdateComment = (id)=>{
-
-      axios.update(`/comment/update/${id}`)
-    }
-
 
     /* toujours vérifier nos props sur le return pour éviter des erreurs. */
   return (

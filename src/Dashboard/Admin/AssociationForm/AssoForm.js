@@ -115,7 +115,7 @@ function AssoForm(props) {
 
     if (props.addForm) {
       axios
-        .post("http://localhost:8080/association/save", formData, {
+        .post("/association/save", formData, {
           "Content-Type": "multipart/form-data",
         })
         .then((response) => {
@@ -129,7 +129,7 @@ function AssoForm(props) {
         });
     } else if (props.updateForm) {
       axios
-        .put("http://localhost:8080/association/update", formData, {
+        .put("/association/update", formData, {
           "Content-Type": "multipart/form-data",
         })
         .then((response) => {

@@ -276,7 +276,7 @@ export default function Association() {
             <div>
               <p className="text-center mt-[10rem] text-3xl font-black">
                 {" "}
-                Vous n'avez suivi aucune association ....{" "}
+                Vous ne suivez aucune association ....{" "}
               </p>
 
             </div>

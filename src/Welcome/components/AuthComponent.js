@@ -6,11 +6,9 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
-import { Link } from "react-router-dom";
+import Logout from "@mui/icons-material/Logout";
+import { Link,useNavigate } from "react-router-dom";
 import { UserInfoContext } from "../../AuthContext";
 
 
@@ -55,11 +53,25 @@ export default function AuthComponent() {
     setAnchorEl(null);
   };
 
-  const {userConnected, userLoading } = React.useContext(UserInfoContext); 
+const { userConnected,setUserConnected, setUserLoading } = React.useContext(UserInfoContext); 
 
+ const navigate = useNavigate(); 
+  const logout = ()=>{
+
+    sessionStorage.removeItem("auth") 
+
+    setUserLoading(false) /* dans ma logique on déconnecte le USER  */
+    setUserConnected(null) /* si on met a null , on aura des erreus. on modifier le userConnected  a un objet {} vide comme lors de l'initialisation */
+    
+     //pour que dans App.js si on actualise la page le state sera initialisé par la session.
+        sessionStorage.removeItem("auth")
+    
+    navigate("/login")
+    handleClose() ; 
+  }
   return (
     <React.Fragment>
-      {userLoading && (
+      {userConnected?.id && (
         <>
           <Box
             sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
@@ -74,7 +86,9 @@ export default function AuthComponent() {
                 aria-expanded={open ? "true" : undefined}
               >
                 <Avatar
-                  {...stringAvatar("Elanrif SaidBaco Ousseni")}
+                  {...stringAvatar(
+                    `${userConnected.firstName} ${userConnected.lastName}`
+                  )}
                   sx={{ width: 32, height: 32 }}
                 />
               </IconButton>
@@ -115,32 +129,25 @@ export default function AuthComponent() {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            {userConnected?.role === "ADMIN" &&
+            {userConnected?.role === "ADMIN" && (
               <Link to="/dashboard/admin">
                 <MenuItem onClick={handleClose}>
                   <Avatar /> Admin
                 </MenuItem>
               </Link>
-            }
+            )}
             <Link to="/dashboard/user">
               <MenuItem onClick={handleClose}>
                 <Avatar /> Mon compte
               </MenuItem>
             </Link>
             <Divider />
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={logout}>
               <ListItemIcon>
-                <PersonAdd fontSize="small" />
+                <Logout fontSize="small" />
               </ListItemIcon>
-              Ajouter un compte
+              Déconneter
             </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <Settings fontSize="small" />
-              </ListItemIcon>
-              Paramètre
-            </MenuItem>
-            <Link></Link>
           </Menu>
         </>
       )}

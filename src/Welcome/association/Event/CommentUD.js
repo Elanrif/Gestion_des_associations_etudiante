@@ -60,17 +60,16 @@ function FormDialog(props) {
       .put(
         "/comment/update",
         coment /* on peut pas faire ...comment , car c'est pas un tableau et donc pas iterable */,
-        {
+       /*  {
           params: {
             assoId: association.id,
             userId: userConnected.id,
           },
-        }
+        } */
       )
       .then((res) => {
 
         setPlay(!play); //pour recharger l'association sur le composant Parent Association
-        console.log("coment : ", res.data);
         setComment({
           id : res.data.id,
           content: res.data.content });

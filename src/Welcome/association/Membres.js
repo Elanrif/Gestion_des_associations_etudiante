@@ -57,15 +57,15 @@ function Membres(props) {
     
     const president =
       association.bureaus &&
-      association.bureaus.find((bureau) => bureau.status === "Président");
+      association.bureaus.find((bureau) => bureau.status === "président");
 
     const vicePresident =
       association.bureaus &&
-      association.bureaus.find((bureau) => bureau.status === "Vice-Président");
+      association.bureaus.find((bureau) => bureau.status === "vice-président");
 
     const secretaire =
       association.bureaus &&
-      association.bureaus.find((bureau) => bureau.status === "Sécretaire");
+      association.bureaus.find((bureau) => bureau.status === "secrétaire");
 
     /* le problème que j'ai rencontré en fait c'etait un problème de vérification
      *certains donnée manquait , et n'arrivait pas à acçeder,
@@ -87,9 +87,9 @@ function Membres(props) {
     <div className="rounded-lg py-10 bg-slate-50">
       <div className="text-center">
         <h1 className="text-4xl font-extrabold">
-          Les Principaux Membres du Bureau
+          Membres principaux 
         </h1>
-        <p className="my-5 max-w-[25rem] text-slate-500 mx-auto">
+        <p className="my-5 max-w-[30rem] text-slate-500 mx-auto">
           Veuillez découvrir les membres du Bureau de cette association. Chaque
           membre occupe bel et bien un poste particulier,sur ce découvrer par
           vous même.

@@ -13,7 +13,7 @@ function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={`${className}  block mr-5 xl:mr-2 p-1 rounded-full bg-black`}
+      className={`${className}  block mr-5 xl:mr-2 p-1 rounded-full `}
       style={{ ...style }}
       onClick={onClick}
     />
@@ -24,7 +24,7 @@ function SamplePrevArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={`${className}  block ml-5 xl:ml-[-2rem] z-10 p-1 rounded-full bg-black`}
+      className={`${className}  block ml-5 xl:ml-[-2rem] z-10 p-1 rounded-full`}
       style={{ ...style }}
       onClick={onClick}
     />
@@ -91,9 +91,9 @@ function MainAside() {
      };
   
   return (
-    <div className="pb-10 px-10  min-h-[40vh] bg-orange-100">
+    <div className="pb-10 px-10  min-h-[40vh] bg-orange-800">
       <div className="max-w-[84rem] mx-auto">
-        <h1 className="text-2xl uppercase font-extrabold text-center py-14">
+        <h1 className="text-2xl uppercase text-white font-extrabold text-center py-14">
           Découvrir toutes les Évènements Des Associations Étudiantes
         </h1>
 

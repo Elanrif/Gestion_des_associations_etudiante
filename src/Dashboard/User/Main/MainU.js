@@ -8,7 +8,7 @@ function MainU() {
   const { userConnected, setUserConnected } = useContext(UserInfoContext);
 
   return (
-    <div className="h-[93vh] pt-5 flex items-center justify-center">
+    <div className="h-[93vh] min-w-[50vh] pt-5 flex items-center justify-center">
       <div className="max-w-2xl mx-auto text-center relative">
         <div className=" opacity-20 text-center border border-pink-300">
           <img src="/image/main/speak.png" />

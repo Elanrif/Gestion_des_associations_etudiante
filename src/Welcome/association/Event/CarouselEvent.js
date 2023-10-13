@@ -66,20 +66,12 @@ function CarouselEvent() {
 
     /* directement desctructurer   */
      const { association } = useContext(AssoContext);
-
- /*    const items = [
-      "/Evenement/images/asso_bien_etre.jpeg",
-      "/Evenement/images/asso_culturelle.png",
-      "/Evenement/images/association_art.jpg",
-      "/Evenement/images/club-debat.jpg",
-    ];
- */
-    
+   
 
   return (
     <div className='lg:max-w-[84rem] mx-auto my-10'>
       <Slider {...settings}>
-        {association.events &&  association.events.map((item, index) => (
+        {association?.events &&  association.events.map((item, index) => (
           <div key={index} className="mx-3">
             <CardMainSection event={item} />
           </div>

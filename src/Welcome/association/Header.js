@@ -86,62 +86,66 @@ function Header() {
       });
   
   return (
-    <div>
-      <div>
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
-      </div>
-      <Slider {...settings}>
-        <React.Fragment>
-          <div className="h-[80vh] relative group">
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-slate-500 to-black group-hover:opacity-75 opacity-50"></div>
-            <img
-              src={
-                association.image &&
-                `data:image/jpeg;base64,${association.image}`
-              }
-              className="h-[80vh] w-full"
+    <>
+      {association && (
+        <div>
+          <div>
+            <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
             />
-            <div className="absolute bg-transparent  shadow-sm p-4 rounded-lg top-[5rem] left-[5rem] bottom-0">
-              <h1 className="bg-clip-text text-transparent bg-gradient-to-l from-white to-blue-400 md:text-4xl uppercase font-extrabold ms-[5rem] text-3xl">
-                {association.name}
-              </h1>
-              <div className="mt-5 max-w-5xl md:block xl:mb-5 hidden">
-                <CustomizedTimelines
-                  def={association.def}
-                  expl={association.desc}
-                />
-              </div>
-            </div>
-            <div className="absolute bottom-0 group-hover:visible invisible right-5">
-              <BasicSpeedDial
-                value={association}
-                toast={{ follow, unfollow }}
-                info={"not"}
-                className="group-hover:block invisible"
-              />
-            </div>
           </div>
-        </React.Fragment>
-      </Slider>
+          <div>
+            <React.Fragment>
+              <div className="h-[80vh] relative group">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-slate-500 to-black group-hover:opacity-75 opacity-50"></div>
+                <img
+                  src={
+                    association.image &&
+                    `data:image/jpeg;base64,${association.image}`
+                  }
+                  className="h-[80vh] w-full"
+                />
+                <div className="absolute bg-transparent  shadow-sm p-4 rounded-lg top-[5rem] left-[5rem] bottom-0">
+                  <h1 className="bg-clip-text text-transparent bg-gradient-to-l from-white to-blue-400 md:text-4xl uppercase font-extrabold ms-[5rem] text-3xl">
+                    {association.name}
+                  </h1>
+                  <div className="mt-5 max-w-5xl md:block xl:mb-5 hidden">
+                    <CustomizedTimelines
+                      def={association.def}
+                      expl={association.desc}
+                    />
+                  </div>
+                </div>
+                <div className="absolute bottom-0 group-hover:visible invisible right-5">
+                  <BasicSpeedDial
+                    value={association}
+                    toast={{ follow, unfollow }}
+                    info={"not"}
+                    className="group-hover:block invisible"
+                  />
+                </div>
+              </div>
+            </React.Fragment>
+          </div>
 
-      <div className="my-5 py-5 bg-pink-50">
-        <h1 className="text-2xl my-3 py-5  uppercase text-center font-extrabold ">
-          Pourquoi vous devriez vous engagagez dès maintenant?{" "}
-        </h1>
-        <CustomizeSteeper />
-      </div>
-    </div>
+          <div className="my-5 py-5 bg-black text-white">
+            <h1 className="text-2xl my-3 py-5  uppercase text-center font-extrabold ">
+              Pourquoi vous devriez vous engagagez dès maintenant?{" "}
+            </h1>
+            <CustomizeSteeper />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

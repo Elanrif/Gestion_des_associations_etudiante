@@ -64,7 +64,7 @@ const Association = () => {
           <Comment />
         </AssoContext.Provider>
       ) : (
-        <div>
+        <div className="h-[60vh]">
           {/* par défaut tjrs on va entrer ici car useState association est à null. */}
           
             <BackDrop/>

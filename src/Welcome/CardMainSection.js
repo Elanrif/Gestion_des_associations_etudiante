@@ -11,8 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {MdPlace} from "react-icons/md"
 
@@ -42,7 +41,7 @@ export default function CardMainSection(props) {
   return (
     <>
       {event && (
-        <Card sx={{ maxWidth: 345, height: 500 }} className="overflow-auto">
+        <Card sx={{ maxWidth: 360, height: 560 }} className="overflow-auto">
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -71,28 +70,15 @@ export default function CardMainSection(props) {
           </CardContent>
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
+              <BookmarkIcon />
             </IconButton>
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
           </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph className=" flex items-end">
-                <MdPlace size="2rem" className="text-red-800" />{" "}
-                <p className="text-slate-600 italic"> Mixta Bloc 6 Appart 33</p>
-              </Typography>
-              <Typography paragraph>
-                Veuillez venir nombreux, votre présence est hautement solicité.
-              </Typography>
-            </CardContent>
-          </Collapse>
+          <CardContent>
+            <Typography paragraph className=" flex items-end">
+              <MdPlace size="2rem" className="text-red-800" />{" "}
+              <p className="text-slate-600 italic"> Mixta Bloc 6 Appart 33</p>
+            </Typography>
+          </CardContent>
         </Card>
       )}
     </>

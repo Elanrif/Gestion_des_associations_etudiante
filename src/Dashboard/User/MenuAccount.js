@@ -34,7 +34,7 @@ export default function MenuAccount() {
     sessionStorage.removeItem("auth") 
 
     setUserLoading(false) /* dans ma logique on déconnecte le USER  */
-    setUserConnected({}) /* si on met a null , on aura des erreus. on modifier le userConnected  a un objet {} vide comme lors de l'initialisation */
+    setUserConnected(null) /* si on met a null , on aura des erreus. on modifier le userConnected  a un objet {} vide comme lors de l'initialisation */
     
      //pour que dans App.js si on actualise la page le state sera initialisé par la session.
         sessionStorage.removeItem("auth")
@@ -60,8 +60,16 @@ export default function MenuAccount() {
             aria-expanded={open ? "true" : undefined}
           >
             <div className="flex items-center space-x-3">
-              <Avatar sx={{ width: 32, height: 32 }} src= {userConnected.image &&  `data:image/jpeg;base64,${userConnected.image}`} />
-              <div className="text-white text-sm font-medium">Mon compte</div>
+              <Avatar
+                sx={{ width: 32, height: 32 }}
+                src={
+                  userConnected.image &&
+                  `data:image/jpeg;base64,${userConnected.image}`
+                }
+              />
+              <div className="text-white text-sm font-medium">
+                {userConnected.firstName}
+              </div>
             </div>
           </IconButton>
         </Tooltip>
@@ -101,12 +109,14 @@ export default function MenuAccount() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
+        {userConnected.role === "ADMIN" && (
+          <>
+            <MenuItem onClick={handleClose}>
+              <Avatar />
+              admin
+            </MenuItem>
+          </>
+        )}
         <Divider />
         <Link to="/dashboard/user/update">
           <MenuItem onClick={handleClose}>

@@ -185,8 +185,11 @@ const steps = [
 
 export default function CustomizeSteeper() {
   return (
-    <Stack sx={{ width: "100%" }} spacing={4} className="hidden sm:block sm:max-w-[30rem] md:max-w-[50rem] mx-auto">
-
+    <Stack
+      sx={{ width: "100%" }}
+      spacing={4}
+      className="hidden sm:block sm:max-w-[30rem] md:max-w-[50rem] mx-auto"
+    >
       <Stepper
         alternativeLabel
         activeStep={4}
@@ -194,7 +197,9 @@ export default function CustomizeSteeper() {
       >
         {steps.map((label) => (
           <Step key={label}>
-            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+            <StepLabel StepIconComponent={ColorlibStepIcon}>
+              <span className="text-white">{label}</span> 
+            </StepLabel>
           </Step>
         ))}
       </Stepper>

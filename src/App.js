@@ -36,12 +36,14 @@ import { UserInfoContext } from "./AuthContext"; /* un context peut être utilis
 import Account from "./Dashboard/User/Account";
 import PageNotFound from "./PageNotFound";
 import AssociationAuth from "./Dashboard/User/Main/Association";
+import axios from "axios";
+import GoForward from "./GoForward";
 
 
 function App() {
 
   /* pour éviter que a chaque fois qu'on actualise on doit s'authentifier.car il trouve que le state etait initialisé à useState({}) */
-  const auth = sessionStorage.getItem("auth") ? JSON.parse( sessionStorage.getItem("auth")) : {} ; 
+  const auth = sessionStorage.getItem("auth") ? JSON.parse( sessionStorage.getItem("auth")) : null ; 
   //aussi initialisé userLoading selon la valeur de auth.
   const authBool  =  auth ? true : false  // ici on inialise par {} et pas par false le auth.
 
@@ -49,24 +51,26 @@ function App() {
   const [userConnected, setUserConnected] = useState(auth); // useState({})
   const [userLoading,setUserLoading] = useState(authBool)  // useState(null)
 
-
-  console.log("session : ", userConnected)
-
   //puis ici dès que on se connecte je relance le useEffect
     useEffect(() => {
    
-      console.log("auth : " , userConnected)
-     /* // quand on avorte le projet on a à faire ça
-      sessionStorage.removeItem("auth")
+      /* sessionStorage.removeItem("auth")
       setUserLoading(false) */
-    
-    }, [userLoading])
+      authBool && displayUser()
+    }, [])
 
-    /* useEffect(()=>{
-      sessionStorage.removeItem("auth")
-    },[]) */
+    const displayUser = ()=>{
+       axios.get(`/user/find/{userConnected.id}`)
+       .then((res)=>{
+        setUserConnected(res.data)
+        setUserLoading(true)
+       })
+       .catch((err)=>{
+        console.error("err : ", err)
+       })
+    }
 
-
+   
   return (
     <div className="mb-10">
       {/* je passe a tout mes Route le userConnected et setUserConnected ainsi je peux acçeder a n'important quel composant en utilisante le useContext UserInfoContext */}
@@ -105,6 +109,8 @@ function App() {
               path="association/:associationID"
               element={<Association />}
             />
+            {/* résoud le problème de CostomMenu */}
+            <Route path="Go-forward/:ID" element={<GoForward />} />
           </Route>
 
           {/* user dashboard */}
@@ -181,6 +187,7 @@ function App() {
               />
             </>
           )}
+
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </UserInfoContext.Provider>

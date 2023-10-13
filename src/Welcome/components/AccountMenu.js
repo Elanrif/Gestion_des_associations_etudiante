@@ -23,11 +23,11 @@ export default function AccountMenu() {
     setAnchorEl(null);
   };
   
-  const {userLoading } = React.useContext(UserInfoContext); 
+  const {userConnected } = React.useContext(UserInfoContext); 
 
    return (
      <React.Fragment>
-       {userLoading === false && (
+       {!userConnected?.id && (
          <>
            <Box
              sx={{ display: "flex", alignItems: "center", textAlign: "center" }}

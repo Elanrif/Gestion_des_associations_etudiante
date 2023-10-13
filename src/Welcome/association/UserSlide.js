@@ -25,18 +25,12 @@ const BootstrapTooltip = styled(({ className, ...props }) => (
 }));
 
 function UserSlide(props) {
-  const [bureau, setBureau] = useState(props.avatar);
 
-  /* parfois c'est mieux de mettre le props dans un State .
-   * sauf si le props n'est pas dynamique(on parle des function)
-   *
-   *
-   * */
-
+ 
   const {avatar} = props
 
   return (
-    <div className="p-3 border mx-4 border-slate-100 rounded-xl bg-orange-50 ">
+    <div className="p-3 border h-[23rem] mx-4 border-slate-100 text-white rounded-xl bg-blue-700 ">
       <div>
         <Avatar
           alt="Remy Sharp"
@@ -48,11 +42,11 @@ function UserSlide(props) {
         />
         <div className="text-center mt-5">
           <h1 className="font-bold text-xl">{avatar.firstName}</h1>
-          <p className="text-slate-600 italic">{avatar.status}</p>
+          <p className="text-white italic">{avatar.status}</p>
         </div>
       </div>
 
-      <aside className="max-w-[18rem] mx-auto mt-3 text-slate-800 text-center">
+      <aside className="max-w-[18rem] mx-auto mt-3 text-center">
         {avatar.desc}{" "}
       </aside>
     </div>

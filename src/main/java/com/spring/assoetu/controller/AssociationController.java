@@ -31,6 +31,11 @@ public class AssociationController {
         return associationService.saveAssociation(association);
     }
 
+    @GetMapping("/findWithAssoIdAndUserId/{association_id}/{user_id}")
+    public Boolean findOneByBenevolesId(@PathVariable("association_id") Long associationId,@PathVariable("user_id") Long userId){
+
+        return associationService.findWithAssoIdAndUserId(associationId,userId) ;
+    }
     @GetMapping("/benevole/integrated/{userInfo}/{assoId}")
     public ResponseEntity<Association> saveBenevole(@PathVariable("assoId") Long assoId, @PathVariable("userInfo") Long userInfo) {
 

@@ -13,4 +13,5 @@ public interface AssociationRepository extends JpaRepository<Association,Long> {
     List<Association> findAllByOrderByNameDesc();
     List<Association> findAllByOrderByDateAsc();
     List<Association> findAllByOrderByDateDesc();
+
 }

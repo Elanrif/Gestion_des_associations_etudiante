@@ -6,8 +6,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Data
+@DynamicUpdate
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -20,7 +22,7 @@ public class Bureau {
     private String firstName ;
     private String lastName ;
     private String status ;
-    @Column(name="definition",length = 10000000)
+    @Column(name="description",length = 10000000)
     private String desc ;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")

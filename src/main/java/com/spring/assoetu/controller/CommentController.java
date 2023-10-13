@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/comment")
-public class CommentController implements CommentService{
+public class CommentController {
 
     @Autowired
     private CommentService commentService ;
@@ -25,10 +25,9 @@ public class CommentController implements CommentService{
     }
 
     @PutMapping("/update")
-    public Comment updateInAssoWithUser(@RequestParam("assoId") Long associationId,
-                                        @RequestParam("userId") Long userInfoId,@RequestBody Comment comment) {
+    public Comment updateCommentaire(@RequestBody Comment comment) {
 
-        return commentService.updateInAssoWithUser(associationId,userInfoId,comment);
+        return commentService.update(comment);
     }
 
 

@@ -5,10 +5,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
+@DynamicUpdate
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="evenement")
@@ -19,8 +23,10 @@ public class Event {
     @Column(name="id")
     private Long id ;
     private String type ;
-    @Column(name="description")
+    @Column(name="des")
     private String descp ;
+    @Column(name="lieu")
+    private String place ;
     private LocalDate date ;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
@@ -36,6 +42,15 @@ public class Event {
     )
     @JoinColumn(name = "association_id")
     private Association association ;
+
+    @ManyToMany(
+            mappedBy = "events",
+            fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    private List<UserInfo> users = new ArrayList<>() ;
 
 
 }

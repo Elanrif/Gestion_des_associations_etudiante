@@ -56,7 +56,13 @@ public class AssociationServiceImpl implements AssociationService{
     @Override
     public Association updateAssoWithImg(Association association, MultipartFile image) {
 
+        /*
+        tjrs pour update on prends l'entity via findById il contient déjà tout les informations
+        et on set ce que on veut le reste ne sera pas modifié grâce a @DynamicUpdate ajouté sur l'entité
+        */
+        Association assoetu = associationRepository.findById(association.getId()).get();
 
+        //pour l'image
         if(image != null){
 
             String fileName = StringUtils.cleanPath(image.getOriginalFilename());
@@ -66,25 +72,33 @@ public class AssociationServiceImpl implements AssociationService{
             }
 
             try {
-                association.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+               // association.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+                assoetu.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else{
+        }/*else{
+            association.setImage(assoetu.getImage());
+        }*/
 
-            Association a = associationRepository.findById(association.getId()).get();
-            association.setImage(a.getImage());
-        }
+        /*On modifie seulement les attributs concerné */
+        assoetu.setDesc(association.getDesc());
+        assoetu.setName(association.getName());
+        assoetu.setDef(association.getDef());
 
-        return associationRepository.save(association);
+        return associationRepository.save(assoetu);
     }
 
     @Override
     public Association saveBenevole(Long assoId, Long userInfoID) {
 
         Association association = associationRepository.findById(assoId).orElse(null) ;
+        //l'utilisateur suit déjà l'asso
+        Boolean userFollow =  association.getBenevoles().stream().anyMatch(benevole -> benevole.getId().equals(userInfoID));
+
         UserInfo userInfo = userRepository.findById(userInfoID).orElse(null) ;
-        if(association != null && userInfo != null) {
+        
+        if(userFollow == false) {
 
            userInfo.addAssociations(association);//intègre une association
             // je dois soir enregistrer dans BDD l'une des deux entités. et les cascades s'en chargera de sauvegarder l'autre
@@ -98,8 +112,13 @@ public class AssociationServiceImpl implements AssociationService{
     public Association removeBenevole(Long assoId, Long userInfoID) {
 
         Association association = associationRepository.findById(assoId).orElse(null) ;
+
+        //utilisateur suit déjà l'asso
+        Boolean userFollow =  association.getBenevoles().stream().anyMatch(benevole -> benevole.getId().equals(userInfoID));
+
         UserInfo userInfo = userRepository.findById(userInfoID).orElse(null) ;
-        if(association != null && userInfo != null) {
+
+        if(userFollow == true) {
 
             userInfo.removeAssociations(association);//désintégrée l'asso
 
@@ -203,6 +222,15 @@ public class AssociationServiceImpl implements AssociationService{
         UserInfo userInfo = userRepository.findById(id).orElse(null);
 
         return userInfo.getAssociations();
+    }
+
+    @Override
+    public Boolean findWithAssoIdAndUserId(Long associationId,Long userId) {
+
+        Association association = associationRepository.findById(associationId).orElse(null) ;
+
+        return association.getBenevoles().stream().anyMatch(benevole -> benevole.getId().equals(userId));
+
     }
 
 

@@ -30,5 +30,6 @@ public interface AssociationService {
     public void deleteAssociationById(Long id) ;
     public void deleteAllAssociation() ;
     public List<Association> userInfoAssociations(Long id) ;
+    public Boolean findWithAssoIdAndUserId(Long associationId,Long userId);
 
 }

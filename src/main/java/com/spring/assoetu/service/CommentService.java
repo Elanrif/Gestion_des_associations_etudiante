@@ -12,7 +12,7 @@ public interface CommentService  {
 
 
     public Comment saveInAssoWithUser(Long  associationId , Long userInfoId , Comment comment) ;
-    public Comment updateInAssoWithUser(Long  associationId , Long userInfoId , Comment comment) ;
+    public Comment update(Comment comment) ;
     public Comment saveComment(Comment comment) ;
     public List<Comment> saveAllComment(List<Comment> comments) ;
     public Comment updateComment(Comment comment);

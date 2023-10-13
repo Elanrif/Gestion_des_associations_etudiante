@@ -6,11 +6,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@DynamicUpdate
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -50,6 +52,22 @@ public class UserInfo {
     )
     private List<Association> associations = new ArrayList<>() ;
 
+    @JsonIgnore
+    @ManyToMany(
+           // fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
+    @JoinTable(
+            name="user_event",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="event_id") /*je nomme le 'name' comme je veux, respectivement, il referencera la table USER et ASSO*/
+
+    )
+    private List<Event> events = new ArrayList<>() ;
+
     /*un USER peut poster un commentaire*/
     @JsonIgnore
     @OneToMany(
@@ -73,6 +91,15 @@ public class UserInfo {
 
     /*helpers methodes , méthodes utilitaire*/
 
+    public void addEvents(Event event){
+        events.add(event) ;
+        event.getUsers().add(this) ;
+    }
+
+    public void removeEvents(Event event){
+        events.remove(event) ;
+        event.getUsers().remove(this) ;
+    }
     public void addAssociations(Association association){
         associations.add(association) ;
         association.getBenevoles().add(this);

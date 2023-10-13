@@ -42,19 +42,21 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Comment updateInAssoWithUser(Long associationId, Long userInfoId, Comment comment) {
+    public Comment update(Comment comment) {
 
-        Association association = associationRepository.findById(associationId).orElse(null) ;
-        UserInfo userInfo = userRepository.findById(userInfoId).get() ;
+        Comment commnt = commentRepository.findById(comment.getId()).orElse(null) ;
 
-        if(association != null && userInfo !=null) {
+        // Association association = associationRepository.findById(associationId).orElse(null) ;
+      //  UserInfo userInfo = userRepository.findById(userInfoId).get() ;
 
-            comment.setDate(LocalDate.now());
+        if(commnt != null) {
 
-            association.addComments(comment);
-            userInfo.addComments(comment);
+            commnt.setDate(LocalDate.now());
+            commnt.setContent(comment.getContent());
+          //  association.addComments(comment);
+          //  userInfo.addComments(comment);
             /*il suffit d'enregistrer le comment , les cascades s'occuperont d'enregistrer l'asso et userInfo*/
-            return commentRepository.save(comment) ;
+            return commentRepository.save(commnt) ;
         }
 
         return null;
